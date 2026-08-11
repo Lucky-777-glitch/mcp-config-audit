@@ -28,9 +28,13 @@
   "keywords": [
     "mcp",
     "model-context-protocol",
+    "mcp-security",
     "security",
+    "security-scanner",
+    "static-analysis",
     "lint",
-    "cli"
+    "cli",
+    "github-actions"
   ],
   "repository": {
     "type": "git",
@@ -45,3 +49,4 @@
   },
   "license": "MIT"
 }
+
