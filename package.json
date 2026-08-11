@@ -12,13 +12,15 @@
   "files": [
     "bin",
     "src",
+    "CHANGELOG.md",
     "LICENSE",
     "README.md"
   ],
   "scripts": {
     "audit": "node ./bin/mcp-config-audit.js --require-config ./examples",
     "test": "node --test",
-    "check": "npm run test && npm run audit"
+    "check": "npm run test && npm run audit",
+    "prepublishOnly": "npm run check"
   },
   "engines": {
     "node": ">=20"
@@ -38,5 +40,8 @@
     "url": "https://github.com/Lucky-777-glitch/mcp-config-audit/issues"
   },
   "homepage": "https://github.com/Lucky-777-glitch/mcp-config-audit#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT"
 }
