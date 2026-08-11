@@ -1,6 +1,6 @@
 # mcp-config-audit
 
-![mcp-config-audit — Catch risky MCP configs before they run](docs/social-preview.png)
+![mcp-config-audit — Catch risky MCP configs before they run](docs/social-preview.jpg)
 
 [![npm version](https://img.shields.io/npm/v/mcp-config-audit?color=2ea44f)](https://www.npmjs.com/package/mcp-config-audit)
 [![npm downloads](https://img.shields.io/npm/dm/mcp-config-audit)](https://www.npmjs.com/package/mcp-config-audit)
