@@ -1,0 +1,17 @@
+{
+  // JSON with comments and trailing commas is supported.
+  "servers": {
+    "memory": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory@2025.8.4"],
+    },
+    "example-remote": {
+      "type": "http",
+      "url": "https://example.com/mcp",
+      "headers": {
+        "Authorization": "${env:EXAMPLE_MCP_TOKEN}"
+      }
+    }
+  }
+}
