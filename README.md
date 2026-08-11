@@ -1,6 +1,27 @@
 # mcp-config-audit
 
-`mcp-config-audit` is a zero-dependency CLI that checks MCP server configuration files for common security and reliability problems—without starting any configured server.
+![mcp-config-audit — Catch risky MCP configs before they run](docs/social-preview.png)
+
+[![npm version](https://img.shields.io/npm/v/mcp-config-audit?color=2ea44f)](https://www.npmjs.com/package/mcp-config-audit)
+[![npm downloads](https://img.shields.io/npm/dm/mcp-config-audit)](https://www.npmjs.com/package/mcp-config-audit)
+[![CI](https://github.com/Lucky-777-glitch/mcp-config-audit/actions/workflows/ci.yml/badge.svg)](https://github.com/Lucky-777-glitch/mcp-config-audit/actions/workflows/ci.yml)
+[![license](https://img.shields.io/npm/l/mcp-config-audit)](LICENSE)
+
+**Catch risky MCP configuration before it reaches an AI agent.**
+
+`mcp-config-audit` is a zero-dependency CLI that statically checks MCP server configuration files for exposed secrets, insecure endpoints, missing environment variables, and unpinned packages. It never starts a configured server and never uploads configuration content.
+
+```sh
+npx mcp-config-audit@latest
+```
+
+## Why use it?
+
+- **Safe by design:** commands and MCP servers are never executed.
+- **Useful findings:** catches common security and reliability mistakes with precise file paths.
+- **Secret-safe output:** detected credential values are always redacted.
+- **CI-friendly:** strict mode, stable exit codes, JSON, and SARIF output.
+- **Easy to adopt:** no install, config file, or runtime dependency required.
 
 It recognizes both common top-level formats:
 
@@ -9,7 +30,7 @@ It recognizes both common top-level formats:
 
 ## What it catches
 
-- possible hard-coded API keys, tokens, passwords, and credentials (values are never printed)
+- possible hard-coded API keys, tokens, passwords, and credentials
 - invalid JSON/JSONC and malformed server entries
 - missing commands or remote URLs
 - missing referenced environment variables and `.env` files
@@ -17,15 +38,13 @@ It recognizes both common top-level formats:
 - unpinned packages launched through `npx`
 - local commands that cannot be found (optional)
 
-The checks are static. The tool never executes a command, connects to an MCP endpoint, or uploads configuration content.
-
 ## Quick start
+
+Scan the current directory for supported configuration files:
 
 ```sh
 npx mcp-config-audit@latest
 ```
-
-By default, the CLI scans the current directory for `mcp.json`, `.mcp.json`, and `claude_desktop_config.json`, while skipping dependency and build directories.
 
 Audit specific files or directories:
 
@@ -64,7 +83,7 @@ Given this configuration:
 }
 ```
 
-the CLI reports the location of the possible secret and the unpinned package, but never echoes the secret value:
+the CLI reports the possible secret and the unpinned package, but never echoes the secret value:
 
 ```text
 .vscode/mcp.json $.servers.example.env.API_KEY ERROR MCP101 Possible hard-coded secret. Use an environment or input variable instead; the value was redacted.
@@ -86,6 +105,29 @@ Use an environment/input reference and pin the package version:
     }
   }
 }
+```
+
+## GitHub Actions
+
+Add MCP configuration auditing to every push and pull request:
+
+```yaml
+name: Audit MCP configuration
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  audit-mcp-config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npx --yes mcp-config-audit@latest --strict --require-config .
 ```
 
 ## Exit codes
@@ -120,6 +162,11 @@ Ignore an accepted finding with `--ignore MCP105`. Repeat `--ignore` for multipl
 
 This is a defensive static checker, not a guarantee that a server is safe. Review the publisher and source of every MCP server before running it, limit its permissions, and keep secrets outside committed configuration files.
 
+## Contributing
+
+Issues and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for the test commands and project constraints. Please report vulnerabilities through GitHub's private security reporting flow as described in [SECURITY.md](SECURITY.md).
+
 ## License
 
 MIT
+
