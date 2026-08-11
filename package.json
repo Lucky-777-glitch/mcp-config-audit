@@ -1,0 +1,42 @@
+{
+  "name": "mcp-config-audit",
+  "version": "0.1.0",
+  "description": "Zero-dependency security and reliability checks for MCP server configuration files.",
+  "type": "module",
+  "bin": {
+    "mcp-config-audit": "./bin/mcp-config-audit.js"
+  },
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "audit": "node ./bin/mcp-config-audit.js --require-config ./examples",
+    "test": "node --test",
+    "check": "npm run test && npm run audit"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "security",
+    "lint",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lucky-777-glitch/mcp-config-audit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Lucky-777-glitch/mcp-config-audit/issues"
+  },
+  "homepage": "https://github.com/Lucky-777-glitch/mcp-config-audit#readme",
+  "license": "MIT"
+}
